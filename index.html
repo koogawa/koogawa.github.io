@@ -1,1 +1,53 @@
-Hello World
+<!doctype html>
+
+<html ng-app>
+<head>
+	<title>a GitHub page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+	<link rel="stylesheet" href="_/css/styles.css">
+	<meta name="viewpoint" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+	<header>
+			<section class="layout">
+				<div class="layout" ><p>Logo</p>
+				</div> <!-- branding -->
+			</section> <!-- layout -->
+		<div class="navigation">
+			<section class="layout">
+				<ul class="nav">
+					<li class="icon">
+						<a href="index.html">
+							<i class="fa fa-home"></i><p class="name">Home</p>
+						</a>
+					</li>
+					<li class="icon">
+						<a href="https://twitter.com/jayhori">
+							<i class="fa fa-twitter"></i><p class="name">Twitter</p>
+						</a>
+					</li>
+					<li class="icon">
+						<a href="http://github.com/jayhori">
+							<i class="fa fa-github"></i><p class="name">GitHub</p>
+						</a>
+					</li>
+				</ul>
+			</section><!-- layout -->
+		</div> <!-- navigation -->
+	</header><!-- header -->
+
+
+	<div class="layout lorem">
+		<h1 class="layout">The h1 sentence.</h1>
+		<p >Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+	</div>
+		<p class="layout typi">Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+	<script src="_/js/script.js"></script>
+	<script src="http://localhost:35729/livereload.js"></script>
+</body>
+<footer>
+	<input type="text" ng-model="name" placeholder="Enter a name here">
+	<p class="layout">Hello {{name}}!</p>
+</footer>
+</html>
+
