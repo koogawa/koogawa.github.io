@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <h1>日報太郎</h1>
+        <div id="app">
+            <table>
+                <tr v-for="todo in todos">
+                    <td>
+                        <input type="checkbox" id="checkbox" v-model="todo.checked">
+                        <input type="time" v-model="todo.start" step="300"> 〜 <input type="time" v-model="todo.end" step="300">
+                        <input type="text" v-model="todo.task" size="40">
+                    </td>
+                </tr>
+            </table>
+
+            <ul><li>チェックを入れていない行は無視されるよ</li></ul>
+
+            <p>
+                <textarea id="copyTarget" v-model="output" rows="20" cols="80"></textarea>
+            </p>
+            <p>
+                <button v-on:click="copyToClipboard()">クリップボードにコピー</button>
+            </p>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
