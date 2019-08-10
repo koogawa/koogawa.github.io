@@ -3,7 +3,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     </head>
     <body>
-        <h1>日報太郎</h1>
+        <h1><img src="title.png"></h1>
         <div id="app">
             <table>
                 <tr v-for="todo in todos">
@@ -15,7 +15,7 @@
                 </tr>
             </table>
 
-            <ul><li>チェックを入れていない行は無視されるよ</li></ul>
+            <ul><li>チェックを入れていない行は無視されるわよ</li></ul>
 
             <p>
                 <textarea id="copyTarget" v-model="output" rows="20" cols="80"></textarea>
