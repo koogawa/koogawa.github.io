@@ -38,6 +38,10 @@ var app = new Vue({
             copyTarget.select();
             document.execCommand("Copy");
             alert("コピーできました！ : " + copyTarget.value);
+        },
+        copyToClipboardAndFinish: function() {
+            this.copyToClipboard();
+            location.href = "https://attendance.moneyforward.com/my_page";
         }
     }
 });
