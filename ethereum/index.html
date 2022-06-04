@@ -1,0 +1,113 @@
+<html>
+<script type="text/javascript" src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+<script type='application/javascript'>	
+	var provider;
+	var signer;
+	var myAddress;
+
+	// Metamaskに接続する
+	async function connectWallet() {
+		provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+		await provider.send("eth_requestAccounts", []);
+		signer = provider.getSigner();
+		myAddress = await signer.getAddress();
+		const myBalance = await signer.getBalance();
+		const myTransactionCount = await signer.getTransactionCount();
+		const myGasPrice = await signer.getGasPrice();
+		const myEstimateGas = await signer.estimateGas();
+		let text = myAddress + "<br>";
+		text += "My balance: " + myBalance * 0.000000000000000001 + " ETH<br>";
+		text += "My Transction Count: " + myTransactionCount + "<br>";
+		text += "My Gas Price: " + myGasPrice + "<br>";
+		text += "My Estivate Gas: " + myEstimateGas;
+		document.getElementById('connect-button').remove();
+		document.getElementById('wallet-address').innerHTML = text;
+		document.getElementById('wallet-info').style.visibility = 'visible';
+	}
+
+	// 指定されたコントラクトアドレスから、送付されたNFT一覧を取得し表示する
+	async function fetchNFTs() {
+		//今回作ったNFTのスマートコントラクトにアクセスするためのAPI定義を準備
+		const abi = [
+			'event Transfer(address indexed from, address indexed to, uint256 value)', 
+			'function tokenURI(uint256 _tokenId) view returns (string memory)'
+		];
+		const contractAddress = document.getElementById('contract-address').value;
+		const contract = new ethers.Contract(contractAddress, abi, signer);
+
+		//NFT発行イベントを抽出するためのフィルタ
+		filter = contract.filters.Transfer(null, myAddress) 
+		// 自分のアドレス宛に発行されたNFT一覧を取得
+		txs = await contract.queryFilter(filter);
+
+		// NFTの表示
+		txs.forEach(async function (item, index, ar){
+			tokenId = item.topics[3];
+			url = await contract.tokenURI(tokenId);
+		
+			// スマートコントラクトのtokenURI()から取得したメタデータのURLを読み込み
+			fetch(url, {method: 'GET', cache: 'no-cache'})
+				.then((response) => {
+					return response.json();
+				})
+				.then((result) => {
+					displayNFT(result);
+				});
+		});
+	}
+
+	// 取得したNFTを表示するhtmlを生成
+	function displayNFT(metadata) {
+		div = Object.assign(document.createElement('div'), {className: 'nft-item'});
+		div.appendChild(Object.assign(document.createElement('img'), {src: metadata.image}));
+		div.appendChild(Object.assign(document.createElement('p'), {innerHTML: metadata.name} ));
+		console.log(div);
+		document.getElementById('items').appendChild(div);
+	}
+</script>
+<style>
+	* {
+		font-family: Roboto, Helvetica, Arial, sans-serif;
+		font-weight: 500;
+		color: #555555;
+	}
+	div#connect-wallet button{
+		margin-bottom: 20px;
+		padding: 20px;
+		font-weight: bold;
+	}
+	input#contract-address {
+		width: 300px;
+	}
+	div.nft-item {
+		width: 300px;
+		text-align:center;
+		float: left;
+	}
+	div.nft-item img {
+		height: 250px;
+		width: 250px;
+	}
+	div.nft-item p {
+		margin: 5px;
+		text-align:center;
+	}
+</style>
+<body>
+	<div id='connect-wallet'>
+		<div id='connect-button'>
+				<button onClick="connectWallet()" > Connect Metamask </button>
+		</div>
+		<div id='wallet-info' style="visibility:hidden">
+			Your wallet address: <span id='wallet-address'></span>
+		</div>
+	</div>
+	<!-- <div>
+		<input type="text" id="contract-address" name="contract-address" placeholder="NFT contract address" />
+		<button onclick="fetchNFTs()">Get my NFTs</button>
+	</div> -->
+	<hr/>
+	<div id='items'>
+	</div>
+</body>
+</html>
